@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AskFolake — Know yourself. See clearly. Choose well.</title>
+<meta name="description" content="Modern relationship wisdom for women who want a great love and an extraordinary life.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="site-nav">
+      <a class="brand" href="index.html">AskFolake ♡</a>
+      <div class="desktop-nav">
+        <a href="about.html">About</a>
+        <a href="quotes.html">Quotes</a>
+        <a href="book.html">Book</a>
+      </div>
+      <div class="nav-actions">
+        <a class="navcta" href="join.html">Join the Waitlist</a>
+        <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" onclick="toggleMenu(this)">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="about.html">About</a>
+      <a href="quotes.html">Quotes</a>
+      <a href="book.html">Book</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+ <div class="wrap grid2">
+ <div>
+ <div class="eyebrow">Love • Standards • Choices</div>
+ <h1>Know yourself.<br><span class="accent">See clearly.</span><br>Choose well.</h1>
+ <p class="lead">Modern wisdom for women who want a great love and an extraordinary life.</p>
+ <a class="btn gold" href="join.html">Join the Waitlist →</a>
+ </div>
+ <div><img class="portrait" src="askfolake-portrait-clean.png" alt="AskFolake founder in an elegant red dress"></div>
+ </div>
+</section>
+
+<section class="section feature-band">
+ <div class="wrap center">
+ <div class="eyebrow">Build the love you deserve</div>
+ <h2>Clarity first. Better choices next.</h2>
+ <div class="pillars">
+ <div class="pillar"><div class="letter">♡</div><h3>Know Your Value</h3><p>Clarity begins with you.</p></div>
+ <div class="pillar"><div class="letter">◉</div><h3>Make Wiser Choices</h3><p>Awareness leads to better choices.</p></div>
+ <div class="pillar"><div class="letter">♡</div><h3>Create a Love That Lasts</h3><p>Better choices build better love.</p></div>
+ </div>
+ </div>
+</section>
+
+<section class="section dark">
+ <div class="wrap grid2">
+ <div class="book-stage" aria-label="101 AskFolake Quotes book mock-up">
+ <div class="book-3d">
+ <div class="book-spine"><span>101 ASKFOLAKE QUOTES</span></div>
+ <div class="book-face">
+ <div class="book-kicker">101</div>
+ <div class="book-title">AskFolake<br>Quotes</div>
+ <div class="book-subtitle">for Love &amp; Life</div>
+ <div class="book-heart">♡</div>
+ <div class="book-author">Hanna Hunter</div>
+ </div>
+ </div>
+</div><div><div class="eyebrow">Coming soon</div><h2>101 AskFolake Quotes</h2><p class="lead">101 reflections designed to help you pause, notice what matters and make more intentional relationship choices.</p><a class="btn gold" href="book.html">Discover the Book</a></div>
+ </div>
+</section>
+
+<section class="section">
+ <div class="wrap center">
+ <div class="eyebrow">Stay updated</div>
+ <h2>First to know about new ideas and resources.</h2>
+ <p>Join the AskFolake community and receive relationship insights, reflections, and early access to upcoming books and resources.</p>
+ <form class="form form-wrapper" id="askfolakeForm" style="margin-left:auto;margin-right:auto">
+  <input type="email" id="emailInput" placeholder="Your email address" required aria-label="Email address">
+  <div class="consent-checkbox">
+    <input type="checkbox" id="consentCheckbox" required>
+    <label for="consentCheckbox">I'd like to receive AskFolake insights and updates about new resources. I can unsubscribe at any time. <a href="privacy.html">Privacy Policy</a></label>
+  </div>
+  <div id="formMessage" class="form-message"></div>
+  <div id="formLoading" class="form-loading">
+    <p>Joining AskFolake...</p>
+  </div>
+  <button id="submitBtn" class="btn gold" type="submit">Join the Waitlist</button>
+</form>
+ </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>© 2026 AskFolake</div>
+    <div class="links">
+      <a href="about.html">About</a>
+      <a href="quotes.html">Quotes</a>
+      <a href="book.html">Book</a>
+      <a href="join.html">Join</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+const BREVO_API_KEY = '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';
+const BREVO_LIST_ID = 31;
+const BREVO_API_URL = 'https://api.brevo.com/v3/contacts';
+const BREVO_DOUBLE_OPT_IN = true;
+
+const form = document.getElementById('askfolakeForm');
+const emailInput = document.getElementById('emailInput');
+const consentCheckbox = document.getElementById('consentCheckbox');
+const submitBtn = document.getElementById('submitBtn');
+const formMessage = document.getElementById('formMessage');
+const formLoading = document.getElementById('formLoading');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  formMessage.className = 'form-message';
+  formMessage.textContent = '';
+  
+  if (!consentCheckbox.checked) {
+    showError('Please confirm you want to receive AskFolake updates');
+    return;
+  }
+  
+  const email = emailInput.value.trim();
+  submitBtn.disabled = true;
+  formLoading.classList.add('active');
+  
+  try {
+    const response = await fetch(BREVO_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': BREVO_API_KEY
+      },
+      body: JSON.stringify({
+        email: email,
+        listIds: [BREVO_LIST_ID],
+        updateEnabled: true,
+        doubleOptinConfirmationNeeded: BREVO_DOUBLE_OPT_IN,
+        attributes: {
+          FIRSTNAME: '',
+          SUBSCRIPTION_SOURCE: 'Website Waitlist'
+        }
+      })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to subscribe');
+    }
+    
+    showSuccess('Welcome to AskFolake! Check your email to confirm your subscription.');
+    form.reset();
+    consentCheckbox.checked = false;
+  } catch (error) {
+    console.error('Subscription error:', error);
+    showError('We encountered an issue. Please try again or contact support.');
+  } finally {
+    submitBtn.disabled = false;
+    formLoading.classList.remove('active');
+  }
+});
+
+function showSuccess(message) {
+  formMessage.textContent = message;
+  formMessage.className = 'form-message success';
+  formMessage.setAttribute('role', 'status');
+  formMessage.setAttribute('aria-live', 'polite');
+}
+
+function showError(message) {
+  formMessage.textContent = message;
+  formMessage.className = 'form-message error';
+  formMessage.setAttribute('role', 'alert');
+  formMessage.setAttribute('aria-live', 'assertive');
+}
+
+function toggleMenu(button) {
+  const menu = document.getElementById('mobileMenu');
+  const isExpanded = button.getAttribute('aria-expanded') === 'true';
+  button.setAttribute('aria-expanded', !isExpanded);
+  menu.style.display = isExpanded ? 'none' : 'block';
+}
+</script>
+</body>
+</html>
